@@ -3,10 +3,10 @@
 
 #include <android/log.h>
 
-#define LOG_TAG    "MyDemo"
+#define LOG_TAG    "JNI_LOG"
 #define LOGI(...)  __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 #define LOGE(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
-#define LOGD(...)  __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+#define LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 
 extern
 "C"
@@ -15,7 +15,7 @@ jstring
 JNICALL
 //方法名字：Java+包名+类名+方法名
 Java_com_yalemang_jnistudy_basic_JniBasicActivity_stringFromJNI(
-        JNIEnv* env,
+        JNIEnv *env,
         jobject /* this */) {
     std::string hello = "Hello from C++";
     return env->NewStringUTF(hello.c_str());
@@ -28,11 +28,11 @@ void
 JNICALL
 //方法名字：Java+包名+类名+方法名
 Java_com_yalemang_jnistudy_basic_JniBasicActivity_changeAge(
-        JNIEnv* env,
+        JNIEnv *env,
         jobject /* this */jniBasicActivityObj) {
     jclass jniBasicActivityClass = env->GetObjectClass(jniBasicActivityObj);
-    jfieldID ageField = env->GetFieldID(jniBasicActivityClass,"age","I");
-    env->SetIntField(jniBasicActivityObj,ageField,5);
+    jfieldID ageField = env->GetFieldID(jniBasicActivityClass, "age", "I");
+    env->SetIntField(jniBasicActivityObj, ageField, 5);
 }
 
 extern
@@ -42,11 +42,11 @@ void
 JNICALL
 //方法名字：Java+包名+类名+方法名
 Java_com_yalemang_jnistudy_basic_JniBasicActivity_callFromNative(
-        JNIEnv* env,
+        JNIEnv *env,
         jobject /* this */jniBasicActivityObj, jstring method_name) {
     jclass jniBasicActivityClass = env->GetObjectClass(jniBasicActivityObj);
-    char* methodName = (char*)env->GetStringUTFChars(method_name,0);
-    jmethodID callByNative = env->GetMethodID(jniBasicActivityClass,methodName,"()I");
-    int  result = env->CallIntMethod(jniBasicActivityObj,callByNative);
-    LOGD("Ellen2020->Native调用Java方法返回值:%d",result);
+    char *methodName = (char *) env->GetStringUTFChars(method_name, nullptr);
+    jmethodID callByNative = env->GetMethodID(jniBasicActivityClass, methodName, "(I)I");
+    int result = env->CallIntMethod(jniBasicActivityObj, callByNative,13);
+    LOGD("Ellen2020->Native调用Java方法返回值:%d", result);
 }

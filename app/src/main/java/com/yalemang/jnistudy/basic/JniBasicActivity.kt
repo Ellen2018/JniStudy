@@ -23,7 +23,7 @@ class JniBasicActivity : AppCompatActivity(){
         Log.d("Ellen2020","JNI修改age后的值age=${age}")
 
         //让Native调用上层方法
-        callFromNative("callByNative2")
+        callFromNative("callByNative3")
     }
 
     fun callByNative():Int{
@@ -34,6 +34,11 @@ class JniBasicActivity : AppCompatActivity(){
     fun callByNative2():Int{
         Log.d("Ellen2020","callByNaive2方法被Native调用了")
         return 5
+    }
+
+    fun callByNative3(intValue:Int):Int{
+        Log.d("Ellen2020","callByNaive2方法被Native调用了")
+        return intValue
     }
 
     //从Native获取一个字符串
