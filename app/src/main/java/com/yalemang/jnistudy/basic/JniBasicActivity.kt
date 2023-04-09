@@ -23,12 +23,17 @@ class JniBasicActivity : AppCompatActivity(){
         Log.d("Ellen2020","JNI修改age后的值age=${age}")
 
         //让Native调用上层方法
-        callFromNative()
+        callFromNative("callByNative2")
     }
 
     fun callByNative():Int{
         Log.d("Ellen2020","callByNaive方法被Native调用了")
         return 3
+    }
+
+    fun callByNative2():Int{
+        Log.d("Ellen2020","callByNaive2方法被Native调用了")
+        return 5
     }
 
     //从Native获取一个字符串
@@ -37,7 +42,7 @@ class JniBasicActivity : AppCompatActivity(){
     //Native修改age
     external fun changeAge()
 
-    external fun callFromNative()
+    external fun callFromNative(methodName:String)
 
     companion object {
         // Used to load the 'jnistudy' library on application startup.

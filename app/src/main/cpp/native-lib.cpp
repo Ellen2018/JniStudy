@@ -43,9 +43,10 @@ JNICALL
 //方法名字：Java+包名+类名+方法名
 Java_com_yalemang_jnistudy_basic_JniBasicActivity_callFromNative(
         JNIEnv* env,
-        jobject /* this */jniBasicActivityObj) {
+        jobject /* this */jniBasicActivityObj, jstring method_name) {
     jclass jniBasicActivityClass = env->GetObjectClass(jniBasicActivityObj);
-    jmethodID callByNative = env->GetMethodID(jniBasicActivityClass,"callByNative","()I");
+    char* methodName = (char*)env->GetStringUTFChars(method_name,0);
+    jmethodID callByNative = env->GetMethodID(jniBasicActivityClass,methodName,"()I");
     int  result = env->CallIntMethod(jniBasicActivityObj,callByNative);
     LOGD("Ellen2020->Native调用Java方法返回值:%d",result);
 }
